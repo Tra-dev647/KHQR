@@ -1,23 +1,24 @@
-# Tra Deposit — QR Demo Test
+# Tra Deposit — Bakong KHQR
 
-This version is **DEMO ONLY**. It generates a QR image containing test text so you can test the website UI and the Generate QR flow. It is NOT a real KHQR and cannot receive money. The status endpoint always returns `DEMO ONLY`; it can never mark a deposit as paid.
+Generates a real dynamic KHQR (individual account) for a USD/KHR amount, stores the deposit in Neon PostgreSQL, and confirms payment through the Bakong Open API.
+
+## Setup
+1. Create a Neon database and run `schema.sql` in its SQL editor.
+2. Get a Bakong Open API token (https://api-bakong.nbc.gov.kh/).
+3. Copy `.env.example` to `.env` (local) or add the same variables in Vercel > Settings > Environment Variables.
+   `BAKONG_ACCOUNT_ID` must be YOUR OWN Bakong account (format `name@bank`).
 
 ## Run in Termux
-
 ```bash
-pkg update
-pkg install nodejs-lts git unzip
-cd ~/tra-deposit
 npm install
 npx vercel dev
 ```
 
-Open the local URL shown by Vercel CLI.
+## Deploy
+Push to GitHub, import in Vercel (framework: Other), add the environment variables, deploy.
 
-## Deploy on Vercel
-
-Import the GitHub repository, choose **Other** if asked for a framework, and deploy. This demo does not need database credentials or Bakong API tokens.
-
-## Before live payments
-
-Do not use this demo QR to collect money. For real KHQR, integrate the current official KHQR SDK and Bakong Open API documentation, use your own verified merchant account details, keep tokens in server-side environment variables, and validate transaction amount/currency/receiver before crediting any balance.
+## Notes
+- A deposit becomes PAID only after Bakong returns a transaction matching its md5, amount, currency and receiver. It never trusts the browser.
+- Bakong's API may only accept requests from Cambodian IPs. If checks fail from Vercel, test with a Cambodia-based server/proxy.
+- This app only records PAID status. Crediting a user balance is not included; do it server-side only when `newlyPaid` is true.
+- Test with a tiny amount (e.g. 100 KHR) before real use. Never put the API token in frontend code.

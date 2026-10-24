@@ -1,8 +1,9 @@
 {
   "name": "tra-deposit",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Tra Deposit - Bakong KHQR deposit starter for Vercel",
+  "type": "module",
+  "description": "Tra Deposit - Bakong KHQR deposit (individual account) for Vercel",
   "engines": { "node": ">=20" },
   "scripts": { "dev": "vercel dev" },
   "dependencies": {
