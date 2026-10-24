@@ -1,0 +1,14 @@
+{
+  "name": "tra-deposit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tra Deposit - Bakong KHQR deposit starter for Vercel",
+  "engines": { "node": ">=20" },
+  "scripts": { "dev": "vercel dev" },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "bakong-khqr": "^1.0.20",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": { "vercel": "^41.7.8" }
+}
